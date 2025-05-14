@@ -239,7 +239,30 @@ function highlightActiveNavItem() {
     }
 }
 
+function initMarquee() {
+    const marquee = document.querySelector('.marquee');
+    if (!marquee) return;
+
+    marquee.style.animationDuration = '10s';
+    marquee.innerHTML = marquee.textContent + ' • ' + marquee.textContent;
+}
+
+function updateVisitorCounter() {
+    let visits = localStorage.getItem('visits') || 0;
+    visits = parseInt(visits) + 2;
+    localStorage.setItem('visits', visits);
+    document.getElementById('visit-count').textContent = visits;
+
+    setInterval(() => {
+        visits = parseInt(localStorage.getItem('visits')) + 2;
+        localStorage.setItem('visits', visits);
+        document.getElementById('visit-count').textContent = visits;
+    }, 5000);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    initMarquee();
+    updateVisitorCounter();
     highlightActiveNavItem();
 
     if (currentUser) {
